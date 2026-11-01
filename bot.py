@@ -31,4 +31,21 @@ async def start(_, m):
 async def ping(_, m):
     await m.reply_text("Pong!")
 
+
+@app.on_message(filters.command("check"))
+async def check(_, m):
+    import shutil
+    ff = shutil.which("ffmpeg")
+    try:
+        import pytgcalls
+        tg = "ok"
+    except Exception as e:
+        tg = f"error: {e}"
+    try:
+        import yt_dlp
+        yd = yt_dlp.version.__version__
+    except Exception as e:
+        yd = f"error: {e}"
+    await m.reply_text(f"ffmpeg: {ff}\npytgcalls: {tg}\nyt-dlp: {yd}")
+
 app.run()
