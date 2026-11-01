@@ -2,6 +2,17 @@ import asyncio
 asyncio.set_event_loop(asyncio.new_event_loop())
 
 import os
+
+def load_env(path=".env"):
+    if os.path.exists(path):
+        for line in open(path):
+            line = line.strip()
+            if line and not line.startswith("#") and "=" in line:
+                k, v = line.split("=", 1)
+                os.environ.setdefault(k.strip(), v.strip())
+
+load_env()
+
 from pyrogram import Client, filters
 
 app = Client(
